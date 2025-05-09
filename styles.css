@@ -153,6 +153,29 @@ body {
 }
 
 /* Controls Styles */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 32px 24px;
+}
+
+#volumeSlider {
+    width: 100%;
+    appearance: none;
+    height: 4px;
+    background-color: #F0F0F0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #333333;
+    border-radius: 50%;
+}
 .controls {
     display: flex;
     justify-content: space-between;

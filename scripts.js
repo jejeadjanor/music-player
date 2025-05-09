@@ -4,6 +4,7 @@ const songs = [
         title: 'Summer Paradise',
         artist: 'SIMPLE PLAN',
         cover: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21',
+        audioSrc: 'assets/audio/summer-paradise.mp3',
         duration: 220,
         liked: false,
         lyrics: [
@@ -18,6 +19,20 @@ const songs = [
             "Back to summer paradise with you (Yeah)",
             "And I'll be there in a heartbeat"
         ]
+    },
+    {
+        id:2,
+        title: 'Diamond',
+        artist: 'RIHANNA',
+        cover: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21',
+        audioSrc: 'assets/audio/summer-paradise.mp3',
+        duration: 210,
+        liked: true,
+        lyrics: [
+            "Someday",
+            "I will find my way back to where your name is written in the sand",
+            "Yeah, yeah, yeah, let's go",
+        ]
     }
 ]
 
@@ -27,6 +42,8 @@ const nowPlayingView = document.getElementById('nowPlayingView');
 const albumCover = document.getElementById('albumCover');
 const songTitle = document.getElementById('songTitle');
 const artistName = document.getElementById('artistName');
+const audioPlayer = document.getElementById('audioPlayer');
+const volumeSlider = document.getElementById('volumeSlider');
 const progressBar = document.getElementById('progressBar');
 const currentTime = document.getElementById('currentTime');
 const totalTime = document.getElementById('totalTime');
@@ -85,6 +102,7 @@ function loadCurrentSong() {
     albumCover.src = song.cover;
     songTitle.textContent = song.title;
     artistName.textContent = song.artist;
+    audioPlayer.src = song.audioSrc;
     progressBar.max = song.duration;
     progressBar.value = currentTimeValue;
     totalTime.textContent = formatTime(song.duration);
@@ -198,6 +216,7 @@ function formatTime(seconds) {
 //Play song
 function playSong() {
     isPlaying = true;
+    audioPlayer.play();
     updatePlayPauseButtons();
 
     //Clear existing interval
@@ -222,6 +241,7 @@ function playSong() {
 //Pause Song
 function pauseSong() {
     isPlaying = false;
+    audioPlayer.pause();
     updatePlayPauseButtons();
     clearInterval(playerInterval);
 }
@@ -292,6 +312,9 @@ function setupEventListeners() {
     playPauseBtn.addEventListener('click', togglePlayPause);
     lyricsPlayPauseBtn.addEventListener('click', togglePlayPause);
     miniPlayPauseBtn.addEventListener('click', togglePlayPause);
+    volumeSlider.addEventListener('input', () => {
+        audioPlayer.volume = parseFloat(volumeSlider.value);
+    })
 
     //Navigation buttons
     prevBtn.addEventListener('click', prevSong);
