@@ -1,4 +1,4 @@
-const songs = [
+let songs = [
     {
         id:1,
         title: 'Summer Paradise',
@@ -25,16 +25,17 @@ const songs = [
         title: 'Diamond',
         artist: 'RIHANNA',
         cover: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21',
-        audioSrc: 'assets/audio/summer-paradise.mp3',
+        audioSrc: 'assets/audio/rihanna-diamonds.mp3',
         duration: 210,
         liked: true,
         lyrics: [
-            "Someday",
+            "Shine bright like a diamond",
             "I will find my way back to where your name is written in the sand",
             "Yeah, yeah, yeah, let's go",
         ]
     }
 ]
+
 
 //DOM Elements
 //Now Playing VIew
@@ -42,7 +43,6 @@ const nowPlayingView = document.getElementById('nowPlayingView');
 const albumCover = document.getElementById('albumCover');
 const songTitle = document.getElementById('songTitle');
 const artistName = document.getElementById('artistName');
-const audioPlayer = document.getElementById('audioPlayer');
 const volumeSlider = document.getElementById('volumeSlider');
 const progressBar = document.getElementById('progressBar');
 const currentTime = document.getElementById('currentTime');
@@ -54,6 +54,9 @@ const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const showPlaylistBtn = document.getElementById('showPlaylistBtn');
 const showLyricsBtn = document.getElementById('showLyricsBtn');
+function getAudioPlayer() {
+    return document.getElementById('audioPlayer');
+}
 
 //Lyrics View
 const lyricsView  = document.getElementById('lyricsView');
@@ -78,6 +81,7 @@ const miniTitle = document.getElementById('miniTitle');
 const miniArtist = document.getElementById('miniArtist');
 const miniPlayPauseBtn = document.getElementById('miniPlayPauseBtn');
 
+
 //App State
 let currentSongIndex = 0;
 let isPlaying = false;
@@ -85,6 +89,7 @@ let currentTimeValue = 0;
 let isShuffling = false;
 let isRepeating = false;
 let playerInterval;
+
 
 //Initialize Player
 function initPlayer() {
@@ -95,7 +100,7 @@ function initPlayer() {
 }
 
 //Load Current song
-function loadCurrentSong() {
+export function loadCurrentSong() {
     const song = songs[currentSongIndex];
 
     //Update Now Playing View
@@ -207,94 +212,6 @@ function toggleLike(songId) {
     }
 }
 
-//Format Time (seconds to MM:SS)
-function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs < 10 ? '0': ''}${secs}`
-}
-//Play song
-function playSong() {
-    isPlaying = true;
-    audioPlayer.play();
-    updatePlayPauseButtons();
-
-    //Clear existing interval
-    clearInterval();
-
-    //Start new interval to update progress
-    playerInterval = setInterval(() => {
-        if(currentTimeValue < songs[currentSongIndex].duration) {
-            currentTimeValue++;
-            updateProgressBars();
-        }else{
-            if(isRepeating) {
-                currentTimeValue = 0;
-                updateProgressBars();
-            } else {
-                nextSong();
-            }
-        }
-    }, 1000)
-}
-
-//Pause Song
-function pauseSong() {
-    isPlaying = false;
-    audioPlayer.pause();
-    updatePlayPauseButtons();
-    clearInterval(playerInterval);
-}
-
-//Next Song
-function nextSong() {
-    if(isShuffling) {
-        let nextIndex;
-        do {
-            nextIndex = Math.floor(Math.random() * songs.length);
-        }while (nextIndex === currentSongIndex && songs.length > 1);
-        currentSongIndex = nextIndex;
-    } else {
-        currentSongIndex = (currentSongIndex + 1) % songs.length;
-    }
-
-    currentTimeValue = 0;
-    loadCurrentSong();
-    if (isPlaying) playSong();
-}
-
-//Previous Song 
-function prevSong() {
-    if (currentTimeValue > 3) {
-        //If more than 3 seconds have played, restart the song
-        currentTimeValue = 0;
-    } else {
-        //Go to previous
-        currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-    }
-
-    loadCurrentSong();
-    if (isPlaying) playSong();
-}
-
-// Update Play/Pause Buttons
-function updatePlayPauseButtons() {
-    const playIcon = '<i class="ri-play-fill"></i>';
-    const pauseIcon = '<i class="ri-pause-fill"></i>';
-
-    playPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
-    lyricsPlayPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
-    miniPlayPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
-}
-
-//Update Progress Bars
-function updateProgressBars() {
-    progressBar.value = currentTimeValue;
-    lyricsProgressBar.value = currentTimeValue;
-    currentTime.textContent = formatTime(currentTimeValue);
-    lyricsCurrentTime.textContent = formatTime(currentTimeValue);
-}
-
 //Show VIew
 function showView(viewId) {
     //Hide all views
@@ -337,6 +254,96 @@ function setupEventListeners() {
     repeatBtn.addEventListener('click', toggleRepeat);
 }
 
+//Play song
+export function playSong() {
+    isPlaying = true;
+    getAudioPlayer().play();
+    updatePlayPauseButtons();
+
+    //Clear existing interval
+    clearInterval();
+
+    //Start new interval to update progress
+    playerInterval = setInterval(() => {
+        if(currentTimeValue < songs[currentSongIndex].duration) {
+            currentTimeValue++;
+            updateProgressBars();
+        }else{
+            if(isRepeating) {
+                currentTimeValue = 0;
+                updateProgressBars();
+            } else {
+                nextSong();
+            }
+        }
+    }, 1000)
+}
+
+//Pause Song
+export function pauseSong() {
+    isPlaying = false;
+    getAudioPlayer().pause();
+    updatePlayPauseButtons();
+    clearInterval(playerInterval);
+}
+
+//Next Song
+export function nextSong() {
+    if(isShuffling) {
+        let nextIndex;
+        do {
+            nextIndex = Math.floor(Math.random() * songs.length);
+        }while (nextIndex === currentSongIndex && songs.length > 1);
+        currentSongIndex = nextIndex;
+    } else {
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
+    }
+
+    currentTimeValue = 0;
+    loadCurrentSong();
+    if (isPlaying) playSong();
+}
+
+//Previous Song 
+export function prevSong() {
+    if (currentTimeValue > 3) {
+        //If more than 3 seconds have played, restart the song
+        currentTimeValue = 0;
+    } else {
+        //Go to previous
+        currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    }
+
+    loadCurrentSong();
+    if (isPlaying) playSong();
+}
+
+// Update Play/Pause Buttons
+export function updatePlayPauseButtons() {
+    const playIcon = '<i class="ri-play-fill"></i>';
+    const pauseIcon = '<i class="ri-pause-fill"></i>';
+
+    playPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
+    lyricsPlayPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
+    miniPlayPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
+}
+
+//Update Progress Bars
+export function updateProgressBars() {
+    progressBar.value = currentTimeValue;
+    lyricsProgressBar.value = currentTimeValue;
+    currentTime.textContent = formatTime(currentTimeValue);
+    lyricsCurrentTime.textContent = formatTime(currentTimeValue);
+}
+
+//Format Time (seconds to MM:SS)
+export function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0': ''}${secs}`
+}
+
+
 //Toggle Play/Pause
 function togglePlayPause() {
     if(isPlaying) {
@@ -363,6 +370,12 @@ function toggleRepeat() {
     isRepeating = !isRepeating;
     repeatBtn.style.color = isRepeating ? '#000000' : '#CCCCCC';
 }
+
+function setSongs(newSongs) {
+    songs = newSongs;
+}
+
+
 
 //Initialize the player when the page loads
 window.addEventListener('DOMContentLoaded', initPlayer);
