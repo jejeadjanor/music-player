@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Music Player</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <main class="container">
+            <!-- Now Playing View -->
+             <section id="nowPlayingView" class="view active">
+                <div class="header">
+                    <button id="showPlaylistBtn" class="icon-btn">
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <h1 class="title"></h1>
+                    <button class="icon-btn">
+                        <i class="ri-share-line"></i>
+                    </button>
+                </div>
+
+                <div class="album-cover">
+                    <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21" alt="Album Cover" id="albumCover">
+                </div>
+
+                <div class="track-info">
+                    <div class="chart-badge">#12 TOP CHART</div>
+                    <h2 id="songTitle" class="song-title">Summer Paradise</h2>
+                    <p id="artistName" class="artist-name">SIMPLE PLAN</p>
+                    <audio id="audioPlayer"></audio>
+                </div>
+
+                <div class="progress-container">
+                    <input type="range" id="progressBar" class="progress-bar" min="0" max="100" value="0">
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span id="totalTime">3:40</span>
+                    </div>
+                </div>
+                <div class="volume-control">
+                    <i class="ri-volume-down-line"></i>
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+                    <i class="ri-volume-up-line"></i>
+                </div>
+                <div class="controls">
+                    <button id="shuffleBtn" class="control-btn"><i class="ri-shuffle-line"></i></button>
+                    <button id="prevBtn" class="control-btn"><i class="ri-skip-back-line"></i></button>
+                    <button id="playPauseBtn" class="play-btn"><i class="ri-play-fill"></i></button>
+                    <button id="nextBtn" class="control-btn"><i class="ri-skip-forward-line"></i></button>
+                    <button id="repeatBtn" class="control-btn"><i class="ri-repeat-line"></i></button>
+                </div>
+
+                <div class="swipe-hint" id="showLyricsBtn">
+                    <p>Swipe for music lyric</p>
+                </div>
+             </section>
+
+             <!-- Lyrics View -->
+              <section id="lyricsView" class="view">
+                <div class="header dark">
+                    <button id="backToNowPlayingBtn" class="icon-btn"><i class="ri-arrow-down-s-line"></i></button>
+                    <h1 class="title">Now Playing</h1>
+                    <div class="spacer"></div>
+                </div>
+
+                <div class="pill-indicator">
+                    <div class="pill"></div>
+                </div>
+
+                <div class="lyrics-container">
+                    <h2 id="lyricsSongTitle" class="song-title">Summer</h2>
+                    <p id="lyricsArtistName" class="artist-name">SIMPLE PLAN</p>
+
+                    <div class="lyrics" id="lyricsText">
+                        <p class="current-line"></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="lyrics-progress-container">
+                    <input type="range" id="lyricsProgressBar" class="progress-bar" min="0" max="100" value="0">
+                    <div class="time-display">
+                        <span id="lyricsCurrentTime">0:00</span>
+                        <span id="lyricsTotalTime">3:40</span>
+                    </div>
+                </div>
+
+                <div class="lyrics-controls">
+                    <button id="lyricsPrevBtn" class="control-btn"><i class="ri-skip-back-line"></i></button>
+                    <button id="lyricsPlayPauseBtn" class="play-btn"><i class="ri-play-fill"></i></button>
+                    <button id="lyricsNextBtn" class="control-btn"><i class="ri-skip-forward-line"></i></button>
+                </div>
+              </section>
+              <!-- Playlist View -->
+               <section id="playlistView" class="view">
+                    <div class="header">
+                        <button id="backToPlayerBtn" class="icon-btn"><i class="ri-arrow-left-s-line"></i></button>
+                        <div class="album-info">
+                            <h1 class="title">Monochrome Vibes</h1>
+                            <p class="subtitle">ALBUM</p>
+                        </div>
+                        <button class="icon-btn"><i class="ri-layout-grid-line"></i></button>
+                    </div>
+
+                    <div class="playlist" id="songList">
+                        <!-- Songs will be populated by JS -->
+                    </div>
+
+                    <div id="nowPlayingBar" class="now-playing-bar">
+                        <div class="now-playing-cover">
+                            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21" alt="Now Playing" id="miniCover">
+                        </div>
+                        <div class="now-playing-info">
+                            <h3 id="miniTitle">Summer Paradise</h3>
+                            <p id="miniArtist">SIMPLE PLAN</p>
+                        </div>
+                        <button id="miniPlayPauseBtn" class="mini-play-btn">
+                            <i class="ri-pause-fill"></i>
+                        </button>
+                    </div>
+               </section>
+            </main>
+        <script src="scripts.js"></script>
+    </body>
+</html>

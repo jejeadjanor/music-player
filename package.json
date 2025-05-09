@@ -1,0 +1,15 @@
+{
+  "name": "music-player",
+  "version": "1.0.0",
+  "description": "- The app will allow users to play, pause, skip tracks,adjust volume, and dynamically update the UI.\r - write unit tests using Jest to ensure functionality\r works as expected.",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
