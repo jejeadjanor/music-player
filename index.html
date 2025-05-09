@@ -29,6 +29,7 @@
                     <div class="chart-badge">#12 TOP CHART</div>
                     <h2 id="songTitle" class="song-title">Summer Paradise</h2>
                     <p id="artistName" class="artist-name">SIMPLE PLAN</p>
+                    <audio id="audioPlayer"></audio>
                 </div>
 
                 <div class="progress-container">
@@ -38,7 +39,11 @@
                         <span id="totalTime">3:40</span>
                     </div>
                 </div>
-
+                <div class="volume-control">
+                    <i class="ri-volume-down-line"></i>
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+                    <i class="ri-volume-up-line"></i>
+                </div>
                 <div class="controls">
                     <button id="shuffleBtn" class="control-btn"><i class="ri-shuffle-line"></i></button>
                     <button id="prevBtn" class="control-btn"><i class="ri-skip-back-line"></i></button>
