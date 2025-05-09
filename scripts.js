@@ -1,4 +1,4 @@
-const songs = [
+export let songs = [
     {
         id:1,
         title: 'Summer Paradise',
@@ -36,13 +36,16 @@ const songs = [
     }
 ]
 
+export function setSongs(newSongs) {
+    songs = newSongs;
+}
+
 //DOM Elements
 //Now Playing VIew
 const nowPlayingView = document.getElementById('nowPlayingView');
 const albumCover = document.getElementById('albumCover');
 const songTitle = document.getElementById('songTitle');
 const artistName = document.getElementById('artistName');
-const audioPlayer = document.getElementById('audioPlayer');
 const volumeSlider = document.getElementById('volumeSlider');
 const progressBar = document.getElementById('progressBar');
 const currentTime = document.getElementById('currentTime');
@@ -54,6 +57,11 @@ const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const showPlaylistBtn = document.getElementById('showPlaylistBtn');
 const showLyricsBtn = document.getElementById('showLyricsBtn');
+function getAudioPlayer() {
+    return document.getElementById('audioPlayer');
+}
+
+if(playPauseBtn) playPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
 
 //Lyrics View
 const lyricsView  = document.getElementById('lyricsView');
@@ -78,6 +86,7 @@ const miniTitle = document.getElementById('miniTitle');
 const miniArtist = document.getElementById('miniArtist');
 const miniPlayPauseBtn = document.getElementById('miniPlayPauseBtn');
 
+
 //App State
 let currentSongIndex = 0;
 let isPlaying = false;
@@ -95,7 +104,7 @@ function initPlayer() {
 }
 
 //Load Current song
-function loadCurrentSong() {
+export function loadCurrentSong() {
     const song = songs[currentSongIndex];
 
     //Update Now Playing View
@@ -214,9 +223,9 @@ function formatTime(seconds) {
     return `${mins}:${secs < 10 ? '0': ''}${secs}`
 }
 //Play song
-function playSong() {
+export function playSong() {
     isPlaying = true;
-    audioPlayer.play();
+    getAudioPlayer().play();
     updatePlayPauseButtons();
 
     //Clear existing interval
@@ -239,15 +248,15 @@ function playSong() {
 }
 
 //Pause Song
-function pauseSong() {
+export function pauseSong() {
     isPlaying = false;
-    audioPlayer.pause();
+    getAudioPlayer().pause();
     updatePlayPauseButtons();
     clearInterval(playerInterval);
 }
 
 //Next Song
-function nextSong() {
+export function nextSong() {
     if(isShuffling) {
         let nextIndex;
         do {
@@ -264,7 +273,7 @@ function nextSong() {
 }
 
 //Previous Song 
-function prevSong() {
+export function prevSong() {
     if (currentTimeValue > 3) {
         //If more than 3 seconds have played, restart the song
         currentTimeValue = 0;
@@ -338,7 +347,7 @@ function setupEventListeners() {
 }
 
 //Toggle Play/Pause
-function togglePlayPause() {
+export function togglePlayPause() {
     if(isPlaying) {
         pauseSong();
     } else {
@@ -364,5 +373,13 @@ function toggleRepeat() {
     repeatBtn.style.color = isRepeating ? '#000000' : '#CCCCCC';
 }
 
+
+
 //Initialize the player when the page loads
 window.addEventListener('DOMContentLoaded', initPlayer);
+
+export const playerState = {
+    currentSongIndex : 0,
+    currentTimeValue: 0,
+    isPlaying: false,
+}
