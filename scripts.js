@@ -1,4 +1,4 @@
-export let songs = [
+ let songs = [
     {
         id:1,
         title: 'Summer Paradise',
@@ -36,9 +36,6 @@ export let songs = [
     }
 ]
 
-export function setSongs(newSongs) {
-    songs = newSongs;
-}
 
 //DOM Elements
 //Now Playing VIew
@@ -60,8 +57,6 @@ const showLyricsBtn = document.getElementById('showLyricsBtn');
 function getAudioPlayer() {
     return document.getElementById('audioPlayer');
 }
-
-if(playPauseBtn) playPauseBtn.innerHTML = isPlaying ? pauseIcon : playIcon;
 
 //Lyrics View
 const lyricsView  = document.getElementById('lyricsView');
@@ -104,7 +99,7 @@ function initPlayer() {
 }
 
 //Load Current song
-export function loadCurrentSong() {
+function loadCurrentSong() {
     const song = songs[currentSongIndex];
 
     //Update Now Playing View
@@ -223,7 +218,7 @@ function formatTime(seconds) {
     return `${mins}:${secs < 10 ? '0': ''}${secs}`
 }
 //Play song
-export function playSong() {
+function playSong() {
     isPlaying = true;
     getAudioPlayer().play();
     updatePlayPauseButtons();
@@ -248,7 +243,7 @@ export function playSong() {
 }
 
 //Pause Song
-export function pauseSong() {
+function pauseSong() {
     isPlaying = false;
     getAudioPlayer().pause();
     updatePlayPauseButtons();
@@ -256,7 +251,7 @@ export function pauseSong() {
 }
 
 //Next Song
-export function nextSong() {
+function nextSong() {
     if(isShuffling) {
         let nextIndex;
         do {
@@ -273,7 +268,7 @@ export function nextSong() {
 }
 
 //Previous Song 
-export function prevSong() {
+function prevSong() {
     if (currentTimeValue > 3) {
         //If more than 3 seconds have played, restart the song
         currentTimeValue = 0;
@@ -347,7 +342,7 @@ function setupEventListeners() {
 }
 
 //Toggle Play/Pause
-export function togglePlayPause() {
+function togglePlayPause() {
     if(isPlaying) {
         pauseSong();
     } else {
@@ -373,13 +368,11 @@ function toggleRepeat() {
     repeatBtn.style.color = isRepeating ? '#000000' : '#CCCCCC';
 }
 
+function setSongs(newSongs) {
+    songs = newSongs;
+}
+
 
 
 //Initialize the player when the page loads
 window.addEventListener('DOMContentLoaded', initPlayer);
-
-export const playerState = {
-    currentSongIndex : 0,
-    currentTimeValue: 0,
-    isPlaying: false,
-}
